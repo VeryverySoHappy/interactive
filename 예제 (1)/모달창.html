@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/pop.css"/>
+  <title>Document</title>
+  <script>
+    $(document).ready(function(){
+      $('.popupBtn').on('click', function(e){
+        e.preventDefault();
+        $('body').append('<div id="shadow"></div>')
+        // 화면을 클릭하면 body태그에 <div id="shadow"></div>가 추가됌
+        $('#shadow').css({
+          width:'100%',
+          height:"100%",
+          position:'fixed',
+          left:'0',
+          top:'0',
+          background:'url(pop/modal-bg.png)',
+          // 사선무늬가 화면에 꼭참
+          opacity:'50%'
+        })
+        $('#shadow').on('click',function(e){
+          // 버튼 뿐만 아니라 shadow를 클릭햇을 때도 닫히게 하는 함수
+          // shadow가 덮고 있눈 상태라서 shadow안에서 작업을 해야됌
+          e.preventDefault();
+          $('#closeBtn').trigger('click')
+          // 버튼을 클릭했을 때 이 동작이  실행되도록 할 것
+        })
+        $('#layerPop').css({
+          position:'fixed',
+          top:'150px',
+          left:'50%',
+          marginLeft:'-20px'
+        })
+        $('#layerPop').show();
+
+      })
+      $('#closeBtn').on('click',function(e){
+        e.preventDefault();
+        $('#layerPop').hide();
+        $('#shadow').remove()
+      })
+    })
+  </script>
+</head>
+<body>
+  <div>
+    <a href="" class="popupBtn">
+      <img src="pop/main.jpg" alt="">
+    </a>
+  </div>
+  <div class="layerPop" id="layerPop">
+    <p class="title">
+      <img src="pop/tit_popup02.gif" alt="">
+    </p>
+    <div class="popContent">
+      동의하십니까?
+      <p class="popBtnShort">
+        <a href="" class="btn_defult01">YES</a>
+        <a href="" class="btn_defult02">NO</a>
+      </p>
+      <a href="" class="closeBtn" id="closeBtn">
+        <img src="pop/btn_layerClose.png" alt="">
+      </a>
+    </div>
+  </div>
+</body>
+</html>
