@@ -10,36 +10,55 @@
       background-color: #000;
       position: relative;
       cursor: none;
+      margin: 0;
     }
     h1 {
       color: #fff;
     }
     .cursor_item {
-      position: absolute;
+      position: fixed;
       width: 100px;
       height: 100px;
       background-color: red;
       top: 0;
       left: 0;
+      margin: -50px 0 0 -50px;
+      transition: all 500ms cubic-bezier(0.800, 0.000, 0.245, 1.000);
+    }
+    button {
+      font-size: 40px;
+      font-weight: bold;
+      background: #fff;
+      color: red;
+      padding: 30px 80px;
+      margin: 50px;
+      cursor: pointer;
+      transition: all .5s cubic-bezier(0.800, 0.000, 0.245, 1.000);
+    }
+    button:hover {
+      background: red;
+      color: #fff;
+      font-size: 80px;
+      padding: 80px 150px;
     }
   </style>
   <script>
-    // 자이로센서를 이용해서 모바일에서도 이용 가능
     let cursor_item;
+    let h1;
     let x = 0;
     let y = 0;
     let mx = 0;
     let my = 0;
-    let speed = 0.1;
+    let speed = 0.05;
 
     window.onload = function(){
-      h1 = document.getElementsByTagName('h1')[0];
       cursor_item = document.getElementsByClassName('cursor_item')[0];
-      window.addEventListener('mousemove', mouseFunc, false);
-
+      window.addEventListener('click', mouseFunc, false);
+      // click할 때 마다 이동
       function mouseFunc(e){
         x = e.clientX;
         y = e.clientY;
+        cursor_item.style.transform = 'translate('+x+'px,'+y+'px)';
       }
       loop();
     }
@@ -47,7 +66,6 @@
     function loop(){
       mx += ( x - mx ) * speed;
       my += (y - my) * speed;
-      // console.log(x, mx)
 
       h1.innerHTML = 'x: ' + x + 'mx: ' + mx;
       cursor_item.style.transform = 'translate('+ mx + 'px,' + my + 'px)'
@@ -59,5 +77,6 @@
 <body>
   <h1>test</h1>
   <div class="cursor_item"></div>
+  <button type="button">start</button>
 </body>
 </html>

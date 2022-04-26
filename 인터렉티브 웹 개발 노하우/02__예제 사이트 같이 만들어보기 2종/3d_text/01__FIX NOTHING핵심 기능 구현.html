@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      background-color: #000;
+      position: relative;
+      cursor: none;
+      margin: 0;
+      overflow: hidden;
+      /* 이걸 작성해줘야 스크롤이 안 생김 */
+    }
+    h1 {
+      color: #fff;
+    }
+    /* .cursor_item {
+      position: fixed;
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      top: 0;
+      left: 0;
+    } */
+    .human {
+      position: absolute;
+      width: 300px;
+      left: calc(50%-150px);
+      z-index: 100;
+    }
+    .bg {
+
+    }
+  </style>
+  <script>
+    let human;
+    let bg;
+    let h1;
+    let x = 0;
+    let y = 0;
+    let mx = 0;
+    let my = 0;
+    let speed = 0.009;
+
+    window.onload = function(){
+      h1 = document.getElementsByTagName('h1')[0];
+      human = document.getElementsByClassName('human')[0];
+      bg = document.getElementsByClassName('bg')[0];
+      window.addEventListener('mousemove', mouseFunc, false);
+      // click할 때 마다 이동
+      function mouseFunc(e){
+        x = (e.clientX - window.innerWidth /2);
+        /*(마우스가 움직일 수 있는 x값 = 화면의 가로값) - 화면의 가로값에서 절반을 제외한 값*/
+        y = (e.clientY - window.innerHeight / 2);
+        /* (마우스가 움직일 수 있는 y값 = 화면의 세로값) - 화면의 세호값에서 절반을 제외한 값*/
+
+        /* 이렇게 해주면 모델 이미지가 화면 가운데에서 움직임
+        화면의 가운데가 (0,0)
+        화면의 가운데에서 우측, 하단 = -값
+        화면의 가운데에서 좌측, 상단 = + 값 */
+      }
+      loop();
+    }
+    function loop(){
+      mx += ( x - mx ) * speed;
+      my += (y - my) * speed;
+
+      h1.innerHTML = 'x: ' + x + 'mx: ' + mx;
+      human.style.transform = 'translate('+ -(mx/6)+'px,' + -(my/6)+'px)';
+      bg.style.transform = 'translate('+ (mx/6)+'px,' + (my/6)+'px)';
+      // human과 bg의 +/- 기호를 반대로 주면 서로 반대로 움직임
+      // 6이 아닌 다른 값을 넣어서 해도됌
+      // 마우스 값에 여러 속성을 줘서 해도됌 ex) scale 등
+      window.requestAnimationFrame(loop); 
+    }
+</script>
+</head>
+<body>
+  <h1>test</h1>
+  <img src="./layer-7.png" class="human" alt="사람">
+  <img src="./layer-1.jpg" class="bg" alt="벽">
+</body>
+</html>

@@ -1,0 +1,1 @@
+device orientation 값을 적용하면 모바일에서도 같은 소스로 적용이 가능함
